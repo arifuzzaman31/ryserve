@@ -16,10 +16,32 @@ export const createUser = async(email,name,address) => {
     }
 }
 
+export const updateUser = async(id,data) => {
+    try {
+        const user = await prisma.user.update({
+            where: {
+                id: id
+            },
+            data: data,
+        });
+        return user;
+    } catch (error) {
+        console.log('Error creating user:', error);
+    }
+}
+
 export const getAllUser = async() => {
     const users = await prisma.user.findMany({
-        size: 3,
-        skip: true
+        take: 1
+    });
+    return users;
+}
+
+export const getUser = async(id) => {
+    const users = await prisma.user.findMany({
+        where: {
+            id: id,
+        },
     });
     return users;
 }
