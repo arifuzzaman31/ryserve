@@ -28,7 +28,7 @@ export default async function handler(req,res){
           switch(req.method){
               case 'POST': {
                 const {email,name,address} = req.body
-                //return res.status(200).json({message:address});
+                //return res.status(200).json(address.street);
                   const new_user = await createUser(email,name,address);
                   return res.status(201).json(new_user);
               }

@@ -1,13 +1,24 @@
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
+import prisma from "../lib/prisma";
 
 export const createUser = async(email,name,address) => {
     try {
+        // return address;
         const user = await prisma.user.create({
             data: {
                 email: email,
                 name: name,
-                address: address,
+                address: {
+                    connectOrCreate:[
+                        {
+                            create: {
+                                street: address.street,
+                                city: address.city,
+                                state: address.state,
+                                zip: address.zip,
+                            }
+                        }
+                    ]
+                },
             },
         });
         return user;
@@ -26,7 +37,7 @@ export const updateUser = async(id,data) => {
         });
         return user;
     } catch (error) {
-        console.log('Error creating user:', error);
+        console.log('Error updating user:', error);
     }
 }
 
