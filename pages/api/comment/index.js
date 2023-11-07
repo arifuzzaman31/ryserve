@@ -1,4 +1,4 @@
-import { makeComment } from "../../../prisma/comment";
+import { makeComment } from "../../../prisma/controller/comment";
 
 export default async function handler(req,res){
     try {

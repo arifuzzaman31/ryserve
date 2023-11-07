@@ -1,5 +1,5 @@
-import { slugify } from "../lib/helper";
-import prisma from "../lib/prisma";
+import { slugify } from "../../lib/helper";
+import prisma from "../../lib/prisma";
 
 export const createPost = async(title,body,comment) => {
     try {

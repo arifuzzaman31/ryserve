@@ -1,4 +1,4 @@
-import { createPost, destroyPost, getAllpost, getPost, updatePost } from "../../../prisma/post"
+import { createPost, destroyPost, getAllpost, getPost, updatePost } from "../../../prisma/controller/post"
 
 export default async function handler(req,res){
     try {

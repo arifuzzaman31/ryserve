@@ -6,19 +6,7 @@ export const createUser = async(email,name,address) => {
         const user = await prisma.user.create({
             data: {
                 email: email,
-                name: name,
-                address: {
-                    connectOrCreate:[
-                        {
-                            create: {
-                                street: address.street,
-                                city: address.city,
-                                state: address.state,
-                                zip: address.zip,
-                            }
-                        }
-                    ]
-                },
+                name: name
             },
         });
         return user;
