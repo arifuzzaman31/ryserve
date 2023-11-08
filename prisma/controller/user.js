@@ -1,12 +1,27 @@
-import prisma from "../lib/prisma";
+import { bcrptHash, hashCheck } from "../../lib/helper";
+import prisma from "../../lib/prisma";
 
-export const createUser = async(email,name) => {
+export const createUser = async(data) => {
     try {
-        // return address;
+        const hasPassw = await bcrptHash(data.password);
         const user = await prisma.user.create({
             data: {
-                email: email,
-                name: name
+                email: data.email,
+                name: data.name,
+                user_type: data.user_type,
+                birthDate: new Date(data.birthDate),
+                phoneNumber: data.phoneNumber,
+                country: data.country,
+                city: data.city,
+                location: data.location,
+                residence_address: data.residence_address, 
+                occupation: data.occupation,
+                designation: data.designation,
+                nid: data.nid,
+                tin: data.tin,
+                having_business: data.having_business, 
+                password: hasPassw,
+                status: data.status
             },
         });
         return user;
@@ -17,11 +32,30 @@ export const createUser = async(email,name) => {
 
 export const updateUser = async(id,data) => {
     try {
+        // return data;
+        const hasPassw = await bcrptHash(data.password);
         const user = await prisma.user.update({
             where: {
                 id: id
             },
-            data: data,
+            data:{
+                //email: data.email,
+                name: data.name,
+                user_type: data.user_type,
+                birthDate: new Date(data.birthDate),
+                phoneNumber: data.phoneNumber,
+                country: data.country,
+                city: data.city,
+                location: data.location,
+                residence_address: data.residence_address, 
+                occupation: data.occupation,
+                designation: data.designation,
+                nid: data.nid,
+                tin: data.tin,
+                having_business: data.having_business, 
+                password: hasPassw,
+                status: data.status
+            },
         });
         return user;
     } catch (error) {
@@ -30,9 +64,7 @@ export const updateUser = async(id,data) => {
 }
 
 export const getAllUser = async() => {
-    const users = await prisma.user.findMany({
-        take: 1
-    });
+    const users = await prisma.user.findMany({});
     return users;
 }
 

@@ -1,9 +1,10 @@
-import { createUser, getAllUser,destroyUser, updateUser,getUser } from "../../../prisma/user";
+import { createUser,updateUser, destroyUser, getAllUser, getUser } from "../../../prisma/controller/user";
 // Define roles and their corresponding permissions
 // const roles = {
 //   admin: ['POST', 'DELETE', 'PUT', 'GET'],
 //   user: ['GET'],
 // };
+
 
 // // Middleware function to check role-based permissions
 // const checkPermissions = (role) => {
@@ -20,16 +21,16 @@ import { createUser, getAllUser,destroyUser, updateUser,getUser } from "../../..
 export default async function handler(req,res){
     try {
       // Assume you have a way to get the user's role
-    // const userRole = getUserRole(); // Replace this with the logic to get the user's role
+      // const userRole = getUserRole(); // Replace this with the logic to get the user's role
 
-    // Implement middleware to check permissions based on the user's role
+      // Implement middleware to check permissions based on the user's role
       // checkPermissions(userRole)(req, res, async () => {
         // Handle requests based on the user's role and permissions
           switch(req.method){
               case 'POST': {
-                const {email,name,address} = req.body
-                //return res.status(200).json(address.street);
-                  const new_user = await createUser(email,name,address);
+                // const {email,name,country} = req.body
+                // return res.status(200).json(country);
+                  const new_user = await createUser(req.body);
                   return res.status(201).json(new_user);
               }
               case 'DELETE': {
@@ -40,14 +41,13 @@ export default async function handler(req,res){
 
               case 'PUT': {
                 const {id} = req.query
-                const {email,name,address} = req.body
-                const updatedUser = await updateUser(id,{email:email,name:name,address:address});
+                const updatedUser = await updateUser(id,req.body);
                 return res.status(200).json({message:'User Updated Successful',user: updatedUser});
               }
 
               case 'GET': {
                   const {id} = req.query
-                  if(!id.length){
+                  if(!id){
                     const users = await getAllUser();
                     return res.status(200).json(users);
                   }else{

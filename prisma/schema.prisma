@@ -8,4 +8,33 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
-import '/model/User'
+
+model User {
+  id      String   @id @default(uuid()) @map("_id") @db.ObjectId
+  email   String   @unique
+  name    String?
+  user_type  UserType? @default(CUSTOMER)
+  birthDate DateTime?
+  phoneNumber String?
+  country    String?
+  city    String?
+  location    String?
+  residence_address   String?
+  occupation    String?
+  designation    String?
+  nid  Int?
+  tin  String?
+  having_business  Boolean? @default(false)
+  password   String?
+  status  Boolean  @default(false)
+  deleted DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+enum UserType {
+  CRM_EDITOR
+  BUSINESS_OWNER
+  BUSINESS_MANAGER
+  LISTING_MANAGER
+  CUSTOMER
+}
