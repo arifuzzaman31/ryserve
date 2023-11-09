@@ -1,5 +1,6 @@
 import { bcrptHash, hashCheck } from "../../lib/helper";
 import prisma from "../../lib/prisma";
+import UserResources from "../resources/UserResources";
 
 export const createUser = async(data) => {
     try {
@@ -64,17 +65,17 @@ export const updateUser = async(id,data) => {
 }
 
 export const getAllUser = async() => {
-    const users = await prisma.user.findMany({});
-    return users;
+    const users = await prisma.user.findMany({});  
+    return (new UserResources).handleCollection(users);
 }
 
 export const getUser = async(id) => {
-    const users = await prisma.user.findMany({
+    const users = await prisma.user.findFirst({
         where: {
             id: id,
         },
     });
-    return users;
+    return (new UserResources).handleSingleObject(users);
 }
 
 export const destroyUser = async(id) => {
